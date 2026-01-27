@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+echo "" >> .gitignore
+echo "# Log files" >> .gitignore
+echo "*.log" >> .gitignore
+echo "*.log.*" >> .gitignore
+echo "*.gz" >> .gitignore
