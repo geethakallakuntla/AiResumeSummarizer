@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ResumeMatcherApplication {
+public class ResumeSummarizerApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(ResumeMatcherApplication.class, args);
+    SpringApplication.run(ResumeSummarizerApplication.class, args);
   }
 }
