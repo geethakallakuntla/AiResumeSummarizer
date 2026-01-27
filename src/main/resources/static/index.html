@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Summarizerr</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+<h1>AI Resume </h1>
+
+<div class="btn-container">
+    <button onclick="showSection('upload')">Upload Resume</button>
+    <buttom onclick ="showSection('upload-analyze')">Upload & Analyze</buttom>
+    <button onclick="showSection('analyze')">Analyze Match</button>
+    <button onclick="showSection('summarize')">Summarize Resume</button>
+</div>
+
+<!-- Upload Resume -->
+<div id="upload" class="section">
+    <h2>Upload Resume</h2>
+    <input type="file" id="resumeFile">
+    <button onclick="uploadResume()">Upload</button>
+    <pre id="uploadResult"></pre>
+</div>
+
+<!-- NEW: Upload and Analyze -->
+<div id="upload-analyze" class="section hidden">
+    <h2>Upload Resume & Analyze with Job Description</h2>
+    <input type="file" id="analyzeFile" accept=".txt,.pdf,.docx">
+    <textarea id="jobDescForFile" placeholder="Paste job description here..."></textarea>
+    <button onclick="uploadAndAnalyze()">Upload & Analyze</button>
+    <pre id="uploadAnalyzeResult"></pre>
+</div
+
+ <!-- Analyze -->
+<div id="analyze" class="section hidden">
+    <h2>Resume vs Job Description</h2>
+    <textarea id="resumeText" placeholder="Paste extracted resume text here"></textarea>
+    <textarea id="jobDesc" placeholder="Paste job description here"></textarea>
+    <button onclick="analyzeResume()">Analyze</button>
+    <pre id="analyzeResult"></pre>
+</div>
+
+<!-- Summarize Resume - Updated with BOTH options -->
+<div id="summarize" class="section hidden">
+    <h2>Summarize Resume</h2>
+    
+    <h3>Option 1: Upload File</h3>
+    <input type="file" id="summFile" accept=".txt,.pdf,.docx">
+    <button onclick="summarizeFile()">Summarize File</button>
+    
+    <h3>Option 2: Paste Text</h3>
+    <textarea id="summText" placeholder="Paste full resume text"></textarea>
+    <button onclick="summarizeText()">Summarize Text</button>
+    
+    <h3>Result:</h3>
+    <pre id="summarizeResult"></pre>
+</div>
+<script src="/js/script.js"></script>
+
+</body>
+</html>
