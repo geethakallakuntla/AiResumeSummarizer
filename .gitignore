@@ -32,8 +32,11 @@ build/
 ### VS Code ###
 .vscode/
 
-echo "" >> .gitignore
-echo "# Log files" >> .gitignore
-echo "*.log" >> .gitignore
-echo "*.log.*" >> .gitignore
-echo "*.gz" >> .gitignore
+# Add comprehensive Java/Maven ignores
+cat >> .gitignore << 'EOF'
+
+# Log files
+*.log
+logs/
+*.log.*
+*.gz
