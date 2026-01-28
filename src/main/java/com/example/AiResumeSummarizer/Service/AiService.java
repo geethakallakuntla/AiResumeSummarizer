@@ -17,17 +17,24 @@ public class AiService {
       new ObjectMapper(); /*ObjectMapper converts JSON to Java Objects so that we can work with data cleanly */
 
   /*Creates intelligent prompt for AI analysis
-   * Calls Ollama API with proper JSON Strcucture
+   * Calls Ollama API with proper JSON Strcucture`
    * Extrcats and cleans response text
    */
   public String summarizeResumeWithAI(String resumeText) {
     String prompt =
-        "You are an expert resume summarizer.Your task is to summarize the following resume into"
-            + " **one page**(around 500-600),keeping all key information intact.Organize the"
-            + " summary into clear sections: **Skills, Experience, Education, and Achievements**."
-            + " Use bullet points where appropriate, and keep each section concise. Do not add any"
-            + " information that is not present in the resume."
-            + "\nResume:\n"
+        "You are an expert resume summarizer. Your task is to summarize the following resume into a"
+            + " clear, readable format keeping all key information. Include everything written in"
+            + " the resume, without omitting anything. Organize the summary into the following"
+            + " sections:\n"
+            + "1.Experience"
+            + "2.Education"
+            + "3.Skills"
+            + "4.Certifications"
+            + "4.Achievements"
+            + "Use bullet points for Skills and Achievements. For Education, include everything"
+            + " written in the resume. Do not create fake information.\n"
+            + "Keep formatting readable, like a professional one-page resume."
+            + "Resume:\n"
             + resumeText;
 
     try {

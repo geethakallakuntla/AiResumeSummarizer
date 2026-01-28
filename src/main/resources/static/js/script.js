@@ -1,119 +1,123 @@
-function showSection(name) {
-    document.getElementById("upload").classList.add("hidden");
-       document.getElementById("upload-analyze").classList.add("hidden");
-    document.getElementById("analyze").classList.add("hidden");
-    document.getElementById("summarize").classList.add("hidden");
-       
+// ===============================
+// File selection handler
+// ===============================
+document.getElementById('resumeFile').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    const fileName = file ? file.name : 'No file chosen';
+    document.getElementById('fileName').textContent = fileName;
 
-    document.getElementById(name).classList.remove("hidden");
-}
-
-// Upload Resume
-async function uploadResume() {
-    const file = document.getElementById("resumeFile").files[0];
-    if (!file) return alert("Select a file!");
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const res = await fetch("/api/resume/upload", {
-        method: "POST",
-        body: formData
-    });
-
-    const data = await res.json();
-    document.getElementById("uploadResult").textContent = JSON.stringify(data, null, 2);
-}
-
-async function uploadAndAnalyze() {
-    const file = document.getElementById("analyzeFile").files[0];
-    const jobDesc = document.getElementById("jobDescForFile").value;
-    
-    if (!file) return alert("Please select a resume file!");
-    if (!jobDesc.trim()) return alert("Please enter a job description!");
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("jobDescription", jobDesc);
-
-    try {
-        document.getElementById("uploadAnalyzeResult").textContent = "Analyzing... Please wait...";
-        
-        const res = await fetch("/api/resume/upload-and-analyze", {
-            method: "POST",
-            body: formData
-        });
-
-        const data = await res.json();
-        document.getElementById("uploadAnalyzeResult").textContent = JSON.stringify(data, null, 2);
-    } catch (error) {
-        document.getElementById("uploadAnalyzeResult").textContent = "Error: " + error.message;
+    const summarizeBtn = document.getElementById('summarizeBtn');
+    if (file) {
+        summarizeBtn.disabled = false;
+        summarizeBtn.innerHTML = '<i class="fas fa-robot"></i> Generate AI Summary';
+    } else {
+        summarizeBtn.disabled = true;
+        summarizeBtn.innerHTML = '<i class="fas fa-robot"></i> Select a file first';
     }
-}
+});
 
-// Analyze
-async function analyzeResume() {
-    let resumeText = document.getElementById("resumeText").value;
-    let jobDesc = document.getElementById("jobDesc").value;
+// ===============================
+// Summarize Resume (API Call)
+// ===============================
+async function summarizeResume() {
+    const fileInput = document.getElementById('resumeFile');
+    const summaryDiv = document.getElementById('summaryResult');
+    const summarizeBtn = document.getElementById('summarizeBtn');
 
-    const res = await fetch("/api/resume/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ resumeText, jobDescription: jobDesc })
-    });
-
-    const data = await res.json();
-    document.getElementById("analyzeResult").textContent = JSON.stringify(data, null, 2);
-}
-
-// Summarize from FILE
-async function summarizeFile() {
-    const file = document.getElementById("summFile").files[0];
-    
-    if (!file) {
-        alert("Please select a file!");
+    if (!fileInput.files[0]) {
+        alert('Please select a resume first!');
         return;
     }
 
-    const formData = new FormData();
-    formData.append("file", file);
+    const file = fileInput.files[0];
+    summarizeBtn.disabled = true;
+    summarizeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+
+    summaryDiv.innerHTML = `
+        <div class="loading-state">
+            <div class="spinner"><i class="fas fa-robot"></i></div>
+            <h4>AI is analyzing your resume...</h4>
+            <p>Please wait a few seconds</p>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+    `;
 
     try {
-        document.getElementById("summarizeResult").textContent = "Summarizing file... Please wait...";
-        
-        const res = await fetch("/api/resume/upload-file", {
-            method: "POST",
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await fetch('http://localhost:8080/api/resume/upload-and-summarize', {
+            method: 'POST',
             body: formData
         });
 
-        const data = await res.text();
-        document.getElementById("summarizeResult").textContent = data;
+        if (!response.ok) throw new Error(`API Error: ${response.status}`);
+
+        const data = await response.json();
+        showSummaryResult(file.name, data);
+
     } catch (error) {
-        document.getElementById("summarizeResult").textContent = "Error: " + error.message;
+        summaryDiv.innerHTML = `
+            <div class="error-state">
+                <h4>Analysis Failed</h4>
+                <p>${error.message}</p>
+            </div>
+        `;
+    } finally {
+        summarizeBtn.disabled = false;
+        summarizeBtn.innerHTML = '<i class="fas fa-redo"></i> Analyze Again';
     }
 }
 
-// Summarize from TEXT (rename your existing function)
-async function summarizeText() {
-    let text = document.getElementById("summText").value;
+// ===============================
+// Show AI Summary directly
+// ===============================
+function showSummaryResult(fileName, apiData) {
+    const summaryDiv = document.getElementById('summaryResult');
+    const aiText = apiData.summary || 'No summary returned by AI';
 
-    if (!text) {
-        alert("Please enter resume text!");
-        return;
-    }
+    summaryDiv.innerHTML = `
+        <div class="analysis-result">
+            <div class="result-header">
+                <h4><i class="fas fa-check-circle" style="color: #10b981;"></i> Analysis Complete</h4>
+                <p class="file-info">Analyzed: ${fileName}</p>
+            </div>
 
-    try {
-        document.getElementById("summarizeResult").textContent = "Summarizing... Please wait...";
-        
-        const res = await fetch("/api/resume/summarize", {
-            method: "POST",
-            headers: { "Content-Type": "text/plain" },
-            body: text
-        });
+            <div class="summary-text">
+                <pre style="white-space: pre-wrap; font-family: 'Courier New', monospace;">${aiText}</pre>
+            </div>
 
-        const data = await res.text();
-        document.getElementById("summarizeResult").textContent = data;
-    } catch (error) {
-        document.getElementById("summarizeResult").textContent = "Error: " + error.message;
-    }
+            <div class="action-buttons">
+                <button class="action-btn" onclick="downloadSummary()">
+                    <i class="fas fa-download"></i> Download Summary
+                </button>
+                <button class="action-btn secondary" onclick="resetForm()">
+                    <i class="fas fa-upload"></i> Upload New Resume
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+// ===============================
+// Utilities
+// ===============================
+function downloadSummary() {
+    alert('Download feature can be added later.');
+}
+
+function resetForm() {
+    document.getElementById('resumeFile').value = '';
+    document.getElementById('fileName').textContent = 'No file chosen';
+    const summarizeBtn = document.getElementById('summarizeBtn');
+    summarizeBtn.disabled = true;
+    summarizeBtn.innerHTML = '<i class="fas fa-robot"></i> Select a file first';
+
+    document.getElementById('summaryResult').innerHTML = `
+        <div class="placeholder-summary">
+            <p>Resume summary will appear here</p>
+        </div>
+    `;
 }

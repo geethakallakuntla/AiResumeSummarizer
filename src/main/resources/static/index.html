@@ -2,43 +2,118 @@
 <!DOCTYPE html>
 <html>
 <head>
+     <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Resume Summarizer</title>
     <link rel="stylesheet" href="/style.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1><i class="fas fa-robot"></i> AI Resume Summarizer</h1>
+            <p class="tagline">Upload your resume and let our AI generate a concise summary of your experience and skills.</p>
+        </div>
 
-<h1>AI Resume Summarizer</h1>
-
-<div class="btn-container">
-    <button onclick="showSection('upload')">Upload Resume</button>
-    <button onclick="showSection('summarize')">Summarize Resume</button>
-</div>
-
-<!-- Upload Resume -->
-<div id="upload" class="section">
-    <h2>Upload Resume</h2>
-    <input type="file" id="resumeFile">
-    <button onclick="uploadResume()">Upload</button>
-    <pre id="uploadResult"></pre>
-</div>
-
-<!-- Summarize Resume - Updated with BOTH options -->
-<div id="summarize" class="section hidden">
-    <h2>Summarize Resume</h2>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <h2><i class="fas fa-cloud-upload-alt"></i> Upload Resume</h2>
+                
+              <div class="upload-card">
+    <div class="upload-icon">
+        <i class="fas fa-file-upload"></i>
+    </div>
     
-    <h3>Option 1: Upload File</h3>
-    <input type="file" id="summFile" accept=".txt,.pdf,.docx">
-    <button onclick="summarizeFile()">Summarize File</button>
-    
-    <h3>Option 2: Paste Text</h3>
-    <textarea id="summText" placeholder="Paste full resume text"></textarea>
-    <button onclick="summarizeText()">Summarize Text</button>
-    
-    <h3>Result:</h3>
-    <pre id="summarizeResult"></pre>
+    <div class="upload-info">
+        <p class="file-types">
+            <i class="fas fa-file-pdf"></i> PDF or 
+            <i class="fas fa-file-word"></i> DOCX format, max 5MB
+        </p>
+        
+        <div class="file-input-area">
+            <label for="resumeFile" class="file-label">
+                <i class="fas fa-folder-open"></i> Choose File
+            </label>
+            <input type="file" id="resumeFile" accept=".pdf,.docx,.txt" style="display: none;">
+            <span id="fileName">No file chosen</span>
+        </div>
+        
+        <!-- TWO SEPARATE BUTTONS -->
+       <div class="button-group">
+    <button class="summarize-btn" onclick="summarizeResume()" disabled id="summarizeBtn">
+        <i class="fas fa-robot"></i> Generate AI Summary
+    </button>
 </div>
-<script src="/js/script.js"></script>
+                <!-- Summary Preview Area -->
+                <div class="summary-section">
+                    <h3><i class="fas fa-chart-bar"></i> AI Analysis Results</h3>
+                    <p class="section-description">After uploading, a brief summary of your resume will appear below.</p>
+                    
+                    <div class="summary-preview" id="summaryResult">
+                        <div class="placeholder-summary">
+                            <i class="fas fa-file-alt"></i>
+                            <p>Resume summary will be displayed here...</p>
+                            <p class="hint">Upload a resume to see AI-powered analysis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Features Sidebar -->
+            <div class="sidebar">
+                <h3><i class="fas fa-star"></i> What You Get</h3>
+                <div class="features-list">
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <div>
+                            <h4>Instant Summary</h4>
+                            <p>AI extracts key points in seconds</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <i class="fas fa-search"></i>
+                        <div>
+                            <h4>Skill Analysis</h4>
+                            <p>Identifies core competencies</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <h4>Experience Highlights</h4>
+                            <p>Extracts career milestones</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h4>Secure Processing</h4>
+                            <p>Your data is processed privately</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <h4><i class="fas fa-lightbulb"></i> Pro Tip</h4>
+                    <p>For best results, ensure your resume is well-formatted with clear sections for experience, education, and skills.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><i class="fas fa-code"></i> Built with Spring Boot & Advanced AI</p>
+            <p class="copyright">© 2024 AI Resume Summarizer | All uploads processed securely</p>
+        </div>
+    </div>
+
+    <script src="/js/script.js"></script>
 </body>
 </html>

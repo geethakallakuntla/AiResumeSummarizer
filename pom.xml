@@ -11,8 +11,12 @@
     <groupId>com.example</groupId>
     <artifactId>ResumeSummarizer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ResumeMatcher</name>
-    <description>"A web application that allows users to upload resumes and job descriptions, analyzes their content, and provides a comparison to assess the relevance and fit."</description>
+    <name>Resume Summarizer</name>
+
+<description>
+A web application that allows users to upload resumes and generates a clean,
+AI-powered summary highlighting skills, experience, education, and achievements.
+</description>
     <url/>
     <licenses>
         <license/>
@@ -37,12 +41,10 @@
         </dependency>
 
        <dependency>
-    <groupId>org.testcontainers</groupId>
-    <artifactId>mysql</artifactId>
-    <scope>test</scope>
-</dependency>
-
-
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Spring Boot Test Starter -->
         <dependency>
@@ -51,40 +53,38 @@
             <scope>test</scope>
         </dependency>
 
-<!--Translates JSON to Java Object Conversion-->
+        <!-- Translates JSON to Java Object Conversion -->
         <dependency>
-         <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-</dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
          
-  
-  <!--This gives us Web client to call AI API -->
+        <!-- This gives us Web client to call AI API -->
         <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-webflux</artifactId>
-</dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
 
-<!-- PDF Processing Library - Extracts text from PDF files -->
-<dependency>
-    <groupId>org.apache.pdfbox</groupId>
-    <artifactId>pdfbox</artifactId>
-    <version>2.0.27</version>
-</dependency>
+        <!-- PDF Processing Library - Extracts text from PDF files -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.27</version>
+        </dependency>
 
-<!-- Microsoft Office Processing Library - For reading DOCX files -->
-<dependency>
-    <groupId>org.apache.poi</groupId>
-    <artifactId>poi</artifactId>
-    <version>5.2.3</version>
-</dependency>
+        <!-- Microsoft Office Processing Library - For reading DOCX files -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.3</version>
+        </dependency>
 
-<!-- Extended Office Processing - Specifically for DOCX format -->
-<dependency>
-    <groupId>org.apache.poi</groupId>
-    <artifactId>poi-ooxml</artifactId>
-    <version>5.2.3</version>
-</dependency>
-
+        <!-- Extended Office Processing - Specifically for DOCX format -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.3</version>
+        </dependency>
 
         <!-- Apache Tika dependencies for text extraction -->
         <dependency>
@@ -97,15 +97,44 @@
             <artifactId>tika-parsers-standard-package</artifactId>
             <version>2.9.1</version>
         </dependency>
+
+        <!-- Lombok for reducing boilerplate code -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
-
-
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- Add Lombok annotation processing configuration -->
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <!-- Optional: Lombok Maven Plugin for better integration -->
+            <plugin>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-maven-plugin</artifactId>
+                <version>1.18.20.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>delombok</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
