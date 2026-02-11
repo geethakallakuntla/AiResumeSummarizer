@@ -13,10 +13,10 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Resume Summarizer</name>
 
-<description>
-A web application that allows users to upload resumes and generates a clean,
-AI-powered summary highlighting skills, experience, education, and achievements.
-</description>
+    <description>
+        A web application that allows users to upload resumes and generates a clean,
+        AI-powered summary highlighting skills, experience, education, and achievements.
+    </description>
     <url/>
     <licenses>
         <license/>
@@ -33,6 +33,20 @@ AI-powered summary highlighting skills, experience, education, and achievements.
     <properties>
         <java.version>21</java.version>
     </properties>
+    
+    <!-- Add dependency management for Testcontainers -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>1.19.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
     <dependencies>
         <!-- Spring Boot Web Starter -->
         <dependency>
@@ -40,13 +54,14 @@ AI-powered summary highlighting skills, experience, education, and achievements.
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-       <dependency>
+        <!-- Testcontainers for MySQL testing -->
+        <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>mysql</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!-- Spring Boot Test Starter -->
+        <!-- Spring Boot Test Starter (ONCE) - This includes JUnit Jupiter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -102,13 +117,22 @@ AI-powered summary highlighting skills, experience, education, and achievements.
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Add maven-clean-plugin configuration FIRST -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            
+            <!-- Then the spring-boot-maven-plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -121,20 +145,6 @@ AI-powered summary highlighting skills, experience, education, and achievements.
                         </exclude>
                     </excludes>
                 </configuration>
-            </plugin>
-            <!-- Optional: Lombok Maven Plugin for better integration -->
-            <plugin>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok-maven-plugin</artifactId>
-                <version>1.18.20.0</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>delombok</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

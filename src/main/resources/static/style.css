@@ -591,8 +591,19 @@ body {
 .summarize-btn:hover:not(:disabled) {
     transform: translateY(-2px);
 }
+ summary {
+  white-space: pre-line;
+  text-align: left;
+  line-height: 1.5;
+  font-family: Arial, sans-serif;
+}
 
 .summarize-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+summaryResult span.heading {
+  font-weight: bold;
+  display: block;
+  margin-top: 12px;
 }

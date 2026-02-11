@@ -65,6 +65,7 @@ public class ResumeController {
   Key: file   Value: [Choose your PDF/DOCX/TXT file] */
   public ResponseEntity<Map<String, Object>> uploadAndSummarizeResume(
       @RequestParam("file") MultipartFile file) {
+
     Map<String, Object> response = new HashMap<>();
     try {
       if (file.isEmpty()) {
