@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 /*----------This is the MAIN CONTROLLER, that handles resume summarization for end Users--------- */
 @RestController
 @RequestMapping("/api/resume")
+@CrossOrigin(origins = "*") // ← ADD THIS LINE
 /* POST http://localhost:8080/api/resume/summarize
 Content-Type: application/json
 "Paste your resume text here..." */
@@ -63,6 +65,7 @@ public class ResumeController {
   Key: file   Value: [Choose your PDF/DOCX/TXT file] */
   public ResponseEntity<Map<String, Object>> uploadAndSummarizeResume(
       @RequestParam("file") MultipartFile file) {
+
     Map<String, Object> response = new HashMap<>();
     try {
       if (file.isEmpty()) {

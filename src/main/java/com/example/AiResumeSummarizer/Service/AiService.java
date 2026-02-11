@@ -17,17 +17,40 @@ public class AiService {
       new ObjectMapper(); /*ObjectMapper converts JSON to Java Objects so that we can work with data cleanly */
 
   /*Creates intelligent prompt for AI analysis
-   * Calls Ollama API with proper JSON Strcucture
-   * Extrcats and cleans response text
+   * Calls Ollama API with proper JSON Strcucture`
+   * Extracts and cleans response text
    */
   public String summarizeResumeWithAI(String resumeText) {
     String prompt =
-        "You are an expert resume summarizer.Your task is to summarize the following resume into"
-            + " **one page**(around 500-600),keeping all key information intact.Organize the"
-            + " summary into clear sections: **Skills, Experience, Education, and Achievements**."
-            + " Use bullet points where appropriate, and keep each section concise. Do not add any"
-            + " information that is not present in the resume."
-            + "\nResume:\n"
+        "Create a CONCISE resume summary in exactly this format (max 100 words total):\n\n"
+            + "QUALIFICATION:\n"
+            + "[Current job title] with [total years] years of experience in [field]\n\n"
+            + "SKILLS:\n"
+            + "- [Skill 1]\n"
+            + "- [Skill 2]\n"
+            + "- [Skill 3]\n"
+            + "- [Skill 4]\n"
+            + "- [Skill 5]\n\n"
+            + "EXPERIENCE (Last 2 companies):\n"
+            + "1. [Most recent company]: [Role] ([Dates])\n"
+            + "   - Key achievement with metric\n"
+            + "   - Key achievement with metric\n"
+            + "2. [Previous company]: [Role] ([Dates])\n"
+            + "   - Key achievement with metric\n"
+            + "   - Key achievement with metric\n\n"
+            + "EDUCATION:\n"
+            + "[Degree] in [Major], [University] ([Year])\n\n"
+            + "CERTIFICATIONS:\n"
+            + "- [Certification 1]\n"
+            + "- [Certification 2]\n\n"
+            + "IMPORTANT RULES:\n"
+            + "1. MAXIMUM 100 WORDS TOTAL\n"
+            + "2. Include NUMBERS/METRICS for achievements\n"
+            + "3. Use ONLY the most recent/important information\n"
+            + "4. Keep it VERY concise\n"
+            + "5. No contact information\n"
+            + "6. No full sentences, just bullet points\n\n"
+            + "Resume to summarize:\n"
             + resumeText;
 
     try {
