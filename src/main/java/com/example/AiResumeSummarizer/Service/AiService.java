@@ -22,7 +22,7 @@ public class AiService {
    */
   public String summarizeResumeWithAI(String resumeText) {
     String prompt =
-        "Create a CONCISE resume summary in exactly this format (max 100 words total):\n\n"
+        "Create a CONCISE resume summary in exactly this format (max 300 words total):\n\n"
             + "QUALIFICATION:\n"
             + "[Current job title] with [total years] years of experience in [field]\n\n"
             + "SKILLS:\n"

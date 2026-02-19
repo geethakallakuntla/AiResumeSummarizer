@@ -1,7 +1,7 @@
 // ===============================
 // SIMPLE WORKING VERSION
 // ===============================
-console.log("✅ Resume Summarizer script loaded");
+console.log(" Resume Summarizer script loaded");
 
 // File selection handler
 document.getElementById('resumeFile').addEventListener('change', function(e) {
