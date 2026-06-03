@@ -17,7 +17,7 @@ document.getElementById('resumeFile').addEventListener('change', function(e) {
 
 // Main summarize function
 async function summarizeResume() {
-    console.log("🚀 Starting summarization");
+    console.log(" Starting summarization");
     
     const fileInput = document.getElementById('resumeFile');
     const resultDiv = document.getElementById('summaryResult');
@@ -39,26 +39,26 @@ async function summarizeResume() {
         const formData = new FormData();
         formData.append('file', file);
         
-        console.log("📤 Sending to API...");
+        console.log("Sending to API...");
         const response = await fetch('/api/resume/upload-and-summarize', {
             method: 'POST',
             body: formData
         });
         
-        console.log("✅ Response status:", response.status);
+        console.log(" Response status:", response.status);
         
         if (!response.ok) {
             throw new Error(`API Error: ${response.status}`);
         }
         
         const data = await response.json();
-        console.log("📊 API Data received:", data);
+        console.log(" API Data received:", data);
         
         // Display result
         displayResult(file.name, data);
         
     } catch (error) {
-        console.error("❌ Error:", error);
+        console.error(" Error:", error);
         resultDiv.innerHTML = `<div style="background:#fee; padding:20px;">Error: ${error.message}</div>`;
     } finally {
         btn.disabled = false;
@@ -68,7 +68,7 @@ async function summarizeResume() {
 
 // Simple display function
 function displayResult(fileName, apiData) {
-    console.log("🎯 Displaying result");
+    console.log(" Displaying result");
     
     const resultDiv = document.getElementById('summaryResult');
     const summaryText = apiData.summary || 'No summary available';
@@ -102,7 +102,7 @@ ${summaryText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
 
 // Reset function
 window.resetEverything = function() {
-    console.log("🔄 Resetting form");
+    console.log("Resetting form");
     
     document.getElementById('resumeFile').value = '';
     document.getElementById('fileName').textContent = 'No file chosen';
@@ -121,13 +121,13 @@ window.resetEverything = function() {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("📄 Page loaded");
+    console.log(" Page loaded");
     
     // Connect button
     const btn = document.getElementById('summarizeBtn');
     if (btn) {
         btn.addEventListener('click', summarizeResume);
-        console.log("✅ Button connected");
+        console.log(" Button connected");
     }
     
     // Set initial state
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // TEST FUNCTION - Add this at the END
 // ===============================
 window.testSummaryDisplay = function() {
-    console.log("🧪 Running testSummaryDisplay");
+    console.log(" Running testSummaryDisplay");
     
     const testData = {
         summary: "Test summary content here.\n\nSkills: Java, Spring Boot\nExperience: 5 years",
@@ -148,7 +148,7 @@ window.testSummaryDisplay = function() {
     };
     
     displayResult("test.pdf", testData);
-    console.log("✅ Test complete - check your webpage!");
+    console.log(" Test complete - check your webpage!");
 };
 
-console.log("✅ Script ready. Type 'testSummaryDisplay()' in console to test.");
+console.log(" Script ready. Type 'testSummaryDisplay()' in console to test.");
