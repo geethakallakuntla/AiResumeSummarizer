@@ -79,7 +79,7 @@ public class AiService {
     }
   }
 
-  private String extractCleanText(String jsonResponse) {
+  public String extractCleanText(String jsonResponse) {
     try {
       // Parse JSON and get only the content
       JsonNode root = objectMapper.readTree(jsonResponse);
